@@ -11,17 +11,17 @@ public class PagerAdapter extends FragmentPagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
-        if(position==0)
+        Fragment fragment=null;
+        switch (position)
         {
-            Tab1 tab1=new Tab1();
-            return tab1;
+            case 0:
+                fragment=new Tab1();
+                break;
+            case 1:
+                fragment=new Tab2();
+                break;
         }
-        else if(position==1)
-        {
-            Tab2 tab2=new Tab2();
-            return tab2;
-        }
-        return null;
+        return fragment;
     }
 
     @Override

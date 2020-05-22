@@ -3,18 +3,23 @@ package com.example.techolutionassignment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener,Tab2.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        writePermission();
 
         TabLayout tabLayout=findViewById(R.id.tab_layout);
 
@@ -25,9 +30,13 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri)
-    {
-        
+    public void writePermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(getApplicationContext())) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 200);
+            }
+        }
     }
 }
