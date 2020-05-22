@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/Atg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Atg/Assignment" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Atg/atg_android_new" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/COVID 19" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Chat Room" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Login" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Popular Repo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Popular-Github-Repo" vcs="Git" />
+  </component>
+</project>
