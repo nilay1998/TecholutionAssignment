@@ -18,19 +18,24 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity  {
 
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    PagerAdapter pagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         writePermission();
+        initViews();
+    }
 
-        TabLayout tabLayout=findViewById(R.id.tab_layout);
-
-        ViewPager viewPager=findViewById(R.id.pager);
-        PagerAdapter pagerAdapter=new PagerAdapter(getSupportFragmentManager());
+    private void initViews()
+    {
+        tabLayout=findViewById(R.id.tab_layout);
+        viewPager=findViewById(R.id.pager);
+        pagerAdapter=new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
     }
 

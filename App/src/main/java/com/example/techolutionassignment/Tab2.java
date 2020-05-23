@@ -62,6 +62,8 @@ public class Tab2 extends Fragment {
             if (success) {
                 List<ScanResult> wifiScanList = wifiManager.getScanResults();
                 Log.e(TAG, "onReceive: "+ wifiScanList.size());
+                if(wifiScanList.size()==0)
+                    Toast.makeText(getContext(), "No WiFi Available",Toast.LENGTH_LONG).show();
                 recyclerView.setAdapter(new RecyclerViewAdapter(wifiScanList,getContext()));
             } else {
                 // scan failure handling
