@@ -41,6 +41,7 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         rootview= (ViewGroup)inflater.inflate(R.layout.fragment_tab1, container, false);
 
+        loadData();
         initViews();
 
         button_add_item.setOnClickListener(new View.OnClickListener() {
