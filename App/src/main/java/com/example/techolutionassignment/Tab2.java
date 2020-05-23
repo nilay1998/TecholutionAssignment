@@ -1,8 +1,11 @@
 package com.example.techolutionassignment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +36,8 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class Tab2 extends Fragment {
 
     ViewGroup rootView;
@@ -41,6 +47,22 @@ public class Tab2 extends Fragment {
     TextView wifi_tv;
     RecyclerView recyclerView;
     WifiManager wifiManager;
+    BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context c, Intent intent) {
+            boolean success = intent.getBooleanExtra(
+                    WifiManager.EXTRA_RESULTS_UPDATED, false);
+            if (success) {
+                List<ScanResult> wifiScanList = wifiManager.getScanResults();
+                Log.e(TAG, "onReceive: "+ wifiScanList.size());
+                recyclerView.setAdapter(new RecyclerViewAdapter(wifiScanList));
+            } else {
+                // scan failure handling
+                Log.e(TAG, "onReceive: Failed");
+            }
+        }
+    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,17 +77,31 @@ public class Tab2 extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onPause() {
+        getContext().unregisterReceiver(wifiScanReceiver);
+        super.onPause();
+    }
+
     void connectWifi()
     {
         wifi_tv=rootView.findViewById(R.id.wifi_tv);
         recyclerView=rootView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         wifi_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     Intent panelIntent = new Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY);
                     startActivityForResult(panelIntent, 0);
+                }
+                else
+                {
+                    wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    wifiManager.setWifiEnabled(true);
+                    getContext().registerReceiver(wifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+                    boolean success = wifiManager.startScan();
+                    Log.e(TAG, "onClick: Scanning "+success);
                 }
             }
         });

@@ -5,16 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
 
-    ArrayList<ScanResult> availNetworks;
-    RecyclerViewAdapter(ArrayList<ScanResult> x){
+    List<ScanResult> availNetworks;
+    RecyclerViewAdapter(List<ScanResult> x){
         availNetworks=x;
     }
     @NonNull
@@ -27,7 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.textView.setText(availNetworks.get(position).toString());
+        holder.textView.setText(availNetworks.get(position).SSID.trim());
     }
 
     @Override
