@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+        android:textColor="#000"
         android:background="@null"
         android:id="@+id/todo_et"
         android:layout_weight="4"
