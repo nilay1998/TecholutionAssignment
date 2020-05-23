@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,9 +29,7 @@ public class Tab1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         rootview= (ViewGroup)inflater.inflate(R.layout.fragment_tab1, container, false);
-
         recyclerView=rootview.findViewById(R.id.todoRecyclerView);
         final ToDoListAdapter adapter=new ToDoListAdapter(todoList);
         recyclerView.setAdapter(adapter);
@@ -47,10 +46,22 @@ public class Tab1 extends Fragment {
                     todoList.add(new ToDoItem(false,s));
                     adapter.notifyDataSetChanged();
                 }
+
+                editText_addITem.setText("");
+                closekeyboard();
             }
         });
 
         return rootview;
+    }
+
+    void closekeyboard()
+    {
+        View view=getActivity().getCurrentFocus();
+        if(view!=null){
+            InputMethodManager imm= (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 
 }

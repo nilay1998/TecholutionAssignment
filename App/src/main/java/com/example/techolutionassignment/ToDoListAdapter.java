@@ -1,5 +1,7 @@
 package com.example.techolutionassignment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,23 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
             }
         });
 
+        holder.editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                todiList.get(position).setTodop(editable.toString());
+            }
+        });
+
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +79,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
     {
         CheckBox checkBox;
         EditText editText;
-        Button button;
+        ImageButton button;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox=itemView.findViewById(R.id.checkbox);

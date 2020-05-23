@@ -7,37 +7,125 @@
     android:orientation="vertical"
     tools:context=".Tab2">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:id="@+id/wifi_tv"
-        android:background="#FFF"
+        android:layout_margin="4dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_wifi"/>
+
+        <TextView
+            android:paddingLeft="32dp"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scan WiFi"
+            android:textColor="#000"
+            android:textStyle="italic|bold"/>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_brightness"/>
+
+        <SeekBar
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
         android:layout_margin="4dp"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:text="Scan WiFi"
-        android:textColor="#000"
-        android:textStyle="italic|bold"/>
+        android:layout_height="86dp"
+        android:orientation="horizontal">
 
-    <SeekBar
-        android:layout_margin="32dp"
-        android:id="@+id/seekbar"
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_flash"/>
+
+        <TextView
+            android:paddingLeft="32dp"
+            android:textStyle="italic|bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:text="FlashLifht ON/OFF"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/button_bg"
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
 
-    <ToggleButton
-        android:layout_gravity="center"
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:visibility="invisible"
+            android:id="@+id/progbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

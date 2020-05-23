@@ -28,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,21 +46,26 @@ public class Tab2 extends Fragment {
     private final int CAMERRA_REQUEST_CODE = 2;
     boolean hasCameraFlash = false;
     ToggleButton toggleButton;
-    TextView wifi_tv;
+    LinearLayout wifi_tv;
     RecyclerView recyclerView;
     WifiManager wifiManager;
+    boolean flag=false;
+    ProgressBar progressBar;
+
+
     BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context c, Intent intent) {
             boolean success = intent.getBooleanExtra(
                     WifiManager.EXTRA_RESULTS_UPDATED, false);
+            progressBar.setVisibility(View.INVISIBLE);
             if (success) {
                 List<ScanResult> wifiScanList = wifiManager.getScanResults();
                 Log.e(TAG, "onReceive: "+ wifiScanList.size());
-                recyclerView.setAdapter(new RecyclerViewAdapter(wifiScanList));
+                recyclerView.setAdapter(new RecyclerViewAdapter(wifiScanList,getContext()));
             } else {
                 // scan failure handling
-                Log.e(TAG, "onReceive: Failed");
+                Toast.makeText(getContext(), "Failed",Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -79,7 +86,8 @@ public class Tab2 extends Fragment {
 
     @Override
     public void onPause() {
-        getContext().unregisterReceiver(wifiScanReceiver);
+        if(flag)
+            getContext().unregisterReceiver(wifiScanReceiver);
         super.onPause();
     }
 
@@ -88,15 +96,18 @@ public class Tab2 extends Fragment {
         wifi_tv=rootView.findViewById(R.id.wifi_tv);
         recyclerView=rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        progressBar=rootView.findViewById(R.id.progbar);
         wifi_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    Intent panelIntent = new Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY);
+                    Intent panelIntent = new Intent(Settings.Panel.ACTION_WIFI);
                     startActivityForResult(panelIntent, 0);
                 }
                 else
                 {
+                    progressBar.setVisibility(View.VISIBLE);
+                    flag=true;
                     wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(true);
                     getContext().registerReceiver(wifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
